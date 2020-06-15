@@ -1,12 +1,12 @@
 .sedoo_listmail_name, .sedoo_listmail_dest_elem {
     border: 1px solid #acabab;
-    display: inline;
+    display: inline-block;
     cursor: pointer;
     padding: 1px 5px;
     margin-right: 5px;
-    margin-bottom: :5px;;
-}
+    margin-bottom: 0;
 
+}
 .sedoo_listmail_name.active {
     background:#ddd5d5;
 }
@@ -50,8 +50,13 @@
 .checkall, .byrole {
     border: 1px solid #acabab;
     cursor: pointer;
+    vertical-align: middle;
 }
 
 .checkall.active, .byrole.active {
     background: #ddd5d5;
+}
+
+.sedoo_listmail_text {
+    margin: 10px 0px;
 }

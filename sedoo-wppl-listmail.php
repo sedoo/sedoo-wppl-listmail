@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Sedoo - Listmail
  * Description: Facilite l'envoie d'email aux admins des sites
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: Nicolas Gruwe & Pierre Vert - SEDOO DATA CENTER
  * Author URI:      https://www.sedoo.fr 
  * GitHub Plugin URI: sedoo/sedoo-wppl-listmail
@@ -54,14 +54,14 @@ function sedoo_send_mail_listmail() {
         echo '<section class="listmail_title" id="nsite-'.$i.'"> <div class="listmail_header" id="'.$i.'"><span class="dashicons dashicons-arrow-down" ></span> <h2>'.get_bloginfo( 'name' ).'</h2></div>';
         echo '<div class="listmail_content">';
             echo '<div class="listmail_section">';
-                echo '<h4> Administrateurs <span class="dashicons dashicons-yes checkall" title="Cocher / Decocher tous"></span> </h4> ';
+                echo '<h4>  <span class="dashicons dashicons-yes checkall" title="Cocher / Decocher tous"></span> Administrateurs </h4> ';
                 $blogusers_admin = get_users( [ 'role__in' => ['administrator'] ] );
                 foreach($blogusers_admin as $user_admin){
                     display_user_bloc($user_admin->user_email,$user_admin->user_login, $i, $user_admin->ID, 'administrator');
                 }
             echo '</div>';
             echo '<div class="listmail_section">';    
-                echo '<h4> Editeurs <span class="dashicons dashicons-yes checkall" title="Cocher / Decocher tous"></span></h4>';
+                echo '<h4><span class="dashicons dashicons-yes checkall" title="Cocher / Decocher tous"></span> Editeurs </h4>';
                 $blogusers_editor = get_users( [ 'role__in' => ['editor'] ] );
                 foreach($blogusers_editor as $user_editor){
                     display_user_bloc($user_editor->user_email,$user_editor->user_login, $i, $user_editor->ID, 'editor');
@@ -98,6 +98,10 @@ add_action('wp_ajax_nopriv_sedoo_listmail_sendmailto', 'sedoo_listmail_sendmailt
 add_action('wp_ajax_sedoo_listmail_sendmailto', 'sedoo_listmail_sendmailto');
 function sedoo_listmail_sendmailto() {
     $destlist = $_POST['destlist'];
-    
+    $to      = substr($destlist, 1);
+    $subject = $_POST['sujet'];
+    $message = $_POST['message'];
+
+  //  mail($to, $subject, $message, $headers);
 }
 
