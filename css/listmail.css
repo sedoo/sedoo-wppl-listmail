@@ -1,0 +1,57 @@
+.sedoo_listmail_name, .sedoo_listmail_dest_elem {
+    border: 1px solid #acabab;
+    display: inline;
+    cursor: pointer;
+    padding: 1px 5px;
+    margin-right: 5px;
+    margin-bottom: :5px;;
+}
+
+.sedoo_listmail_name.active {
+    background:#ddd5d5;
+}
+
+.listmail_title {
+    background: #eeeaea;
+    margin-bottom: 10px;
+}
+
+.listmail_title .listmail_header {
+    padding: 6px 5px;
+    cursor: pointer;
+    background: #ccc2d3;
+}
+.listmail_title .listmail_header h2 {
+    margin: 0;
+    display: inline;
+}
+
+.listmail_content {
+    display: none;
+    padding: 0px 10px 10px 10px;
+}
+
+.listmail_title.unfold .listmail_content {
+    display: block;    
+}
+
+.listmail_title.unfold .listmail_header .dashicons {
+    transform: rotate(180deg);
+}
+
+.sedoo_listmailform *{
+    display: block;
+}
+
+.sedoo_listmail_text {
+    width: 500px;
+}
+
+.checkall, .byrole {
+    border: 1px solid #acabab;
+    cursor: pointer;
+}
+
+.checkall.active, .byrole.active {
+    background: #ddd5d5;
+}
