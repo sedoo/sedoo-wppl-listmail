@@ -71,8 +71,22 @@ jQuery(document).ready(function(){
         jQuery(".sedoo_listmail_name.uid-"+uid).toggleClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences
     });
 
+
+    jQuery('#sedoo_listmail_submit').attr('disabled', true);
+    jQuery('.sedoo_listmail_subject, .sedoo_listmail_text').keyup(function(){
+        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sedoo_listmail_text').val().length !=0){
+            jQuery('#sedoo_listmail_submit').attr('disabled', false);
+        }
+        else
+        {
+            jQuery('#sedoo_listmail_submit').attr('disabled', true);        
+        }
+    })
+
     jQuery('#sedoo_listmail_submit').click(function() {
         var destlist = '';
+        var message = jQuery('.sedoo_listmail_text').text();
+        var sujet = jQuery('.sedoo_listmail_subject').text();
         jQuery( "#sedoo_listmail_destlist p" ).each(function( index ) {
             destlist = destlist+','+jQuery(this).attr('mail');
         });
@@ -82,7 +96,9 @@ jQuery(document).ready(function(){
             type: "POST",
             data: {
               'action': 'sedoo_listmail_sendmailto',
-              'destlist' : destlist
+              'destlist' : destlist,
+              'message' : message,
+              'sujet'  : sujet
             }
         }).done(function(response) {
 
