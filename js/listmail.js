@@ -98,6 +98,8 @@ jQuery(document).ready(function(){
             destlist = destlist+','+jQuery(this).attr('mail');
         });
 
+        console.log(expediteur);
+        console.log(message);
         jQuery.ajax({
             url: ajaxurl,
             type: "POST",
