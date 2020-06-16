@@ -88,7 +88,7 @@ function sedoo_send_mail_listmail() {
     <p id="sedoo_listmail_destlist"> </p>
     <section class="sedoo_listmailform">
         <input type="text" name="sedoo_listmail_expediteur" class="regular-text sedoo_listmail_expediteur" placeholder="Expediteur du mail">
-        <input type="text" name="sedoo_listmail_subject" class="regular-text sedoo_listmail_subject" placeholder="Sujet du mail">
+        <input type="text" name="sedoo_listmail_subject" class="regular-text sedoo_listmail_subject" value="help-web@sedoo.fr" placeholder="Sujet du mail">
         <textarea name="sedoo_listmail_text" placeholder="Message" rows="5" cols="30" class="sedoo_listmail_text"></textarea>
         <input type="submit" name="submit" id="sedoo_listmail_submit" class="button button-primary" value="Envoyer">    
     </section>
