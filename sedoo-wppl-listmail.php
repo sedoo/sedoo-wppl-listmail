@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Sedoo - Listmail
  * Description: Facilite l'envoie d'email aux admins des sites
- * Version: 0.0.2
- * Author: Nicolas Gruwe & Pierre Vert - SEDOO DATA CENTER
+ * Version: 0.0.3
+ * Author: Nicolas Gruwe  - SEDOO DATA CENTER
  * Author URI:      https://www.sedoo.fr 
  * GitHub Plugin URI: sedoo/sedoo-wppl-listmail
  * GitHub Branch:     master
@@ -87,8 +87,9 @@ function sedoo_send_mail_listmail() {
     <h2> Destinataires : </h2>
     <p id="sedoo_listmail_destlist"> </p>
     <section class="sedoo_listmailform">
+        <input type="text" name="sedoo_listmail_expediteur" class="regular-text sedoo_listmail_expediteur" placeholder="Expediteur du mail">
         <input type="text" name="sedoo_listmail_subject" class="regular-text sedoo_listmail_subject" placeholder="Sujet du mail">
-        <textarea name="sedoo_listmail_text" rows="5" cols="30" class="sedoo_listmail_text"></textarea>
+        <textarea name="sedoo_listmail_text" placeholder="Message" rows="5" cols="30" class="sedoo_listmail_text"></textarea>
         <input type="submit" name="submit" id="sedoo_listmail_submit" class="button button-primary" value="Envoyer">    
     </section>
     <?php 
@@ -97,11 +98,35 @@ function sedoo_send_mail_listmail() {
 add_action('wp_ajax_nopriv_sedoo_listmail_sendmailto', 'sedoo_listmail_sendmailto');
 add_action('wp_ajax_sedoo_listmail_sendmailto', 'sedoo_listmail_sendmailto');
 function sedoo_listmail_sendmailto() {
+    $expediteur   = $_POST['expediteur'];
     $destlist = $_POST['destlist'];
     $to      = substr($destlist, 1);
     $subject = $_POST['sujet'];
     $message = $_POST['message'];
 
-  //  mail($to, $subject, $message, $headers);
+    //----------------------------------
+    // Construction de l'ent?te
+    //----------------------------------
+    // On choisi g?n?ralement de construire une fronti?re g?n?r?e aleatoirement
+    // comme suit. (le document pourra ainsi etre attache dans un autre mail
+    // dans le cas d'un transfert par exemple)
+    $boundary = "-----=".md5(uniqid(rand()));
+
+    // Ici, on construit un ent?te contenant les informations
+    // minimales requises.
+    // Version du format MIME utilis?
+    $header = "MIME-Version: 1.0\r\n";
+    // Type de contenu. Ici plusieurs parties de type different "multipart/mixed"
+    // Avec un fronti?re d?finie par $boundary
+    $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+    $header .= "\r\n";
+
+    $result = mail($to, $subject, $message, "Reply-to: $expediteur\r\nFrom: $expediteur\r\n".$header);
+     
+    if(!$result) {   
+        echo "Error";   
+    } else {
+        echo "Success";
+    }
 }
 
