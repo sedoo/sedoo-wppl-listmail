@@ -91,9 +91,9 @@ jQuery(document).ready(function(){
 
     jQuery('#sedoo_listmail_submit').click(function() {
         var destlist = '';
-        var expediteur = jQuery('.sedoo_listmail_expediteur').text();
-        var message = jQuery('.sedoo_listmail_text').text();
-        var sujet = jQuery('.sedoo_listmail_subject').text();
+        var expediteur = jQuery('.sedoo_listmail_expediteur').val();
+        var message = jQuery('.sedoo_listmail_text').val();
+        var sujet = jQuery('.sedoo_listmail_subject').val();
         jQuery( "#sedoo_listmail_destlist p" ).each(function( index ) {
             destlist = destlist+','+jQuery(this).attr('mail');
         });
