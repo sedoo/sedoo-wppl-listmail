@@ -3,12 +3,18 @@ jQuery(document).ready(function(){
     function cochage_utilisateur(uid, maill, name) {
         jQuery('#sedoo_listmail_destlist').append('<p class="sedoo_listmail_dest_elem" mail="'+maill+'" id="'+uid+'">'+name+'</p>'); 
         jQuery(".sedoo_listmail_name.uid-"+uid).addClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences
+        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sedoo_listmail_text').val().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0){
+            jQuery('#sedoo_listmail_submit').attr('disabled', false);
+        }
     }
 
 
     function decochage_utilisateur(uid) {
         jQuery('#'+uid+'.sedoo_listmail_dest_elem').remove();
-        jQuery(".sedoo_listmail_name.uid-"+uid).removeClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences
+        jQuery(".sedoo_listmail_name.uid-"+uid).removeClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences        
+        if(jQuery('.sedoo_listmail_dest_elem').length === 0) {
+            jQuery('#sedoo_listmail_submit').attr('disabled', true);  
+        }
     }
 
     jQuery('.listmail_title .listmail_header').click(function() {  // déplier replier les volets
@@ -74,7 +80,7 @@ jQuery(document).ready(function(){
 
     jQuery('#sedoo_listmail_submit').attr('disabled', true);
     jQuery('.sedoo_listmail_subject, .sedoo_listmail_text, .sedoo_listmail_expediteur').keyup(function(){
-        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sedoo_listmail_text').val().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0){
+        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sedoo_listmail_text').val().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0 && jQuery('.sedoo_listmail_dest_elem').length != 0){
             jQuery('#sedoo_listmail_submit').attr('disabled', false);
         }
         else
@@ -103,7 +109,13 @@ jQuery(document).ready(function(){
               'expediteur'  : expediteur
             }
         }).done(function(response) {
-
+            if(response == 'success') {
+                var text = 'Message envoyé !';   
+            } else {
+                var text = 'Une erreur est survenue.';
+            }
+            jQuery('.mailstatus').remove();
+            jQuery('.sedoo_listmailform').append('<p class="mailstatus '+response+'">'+text+'</p>');
         });
     });
 });

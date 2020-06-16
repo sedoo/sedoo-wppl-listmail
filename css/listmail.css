@@ -63,3 +63,15 @@
 .sedoo_listmail_expediteur {
     margin-bottom: 10px;
 }
+
+.mailstatus {
+    padding: 10px;
+}
+
+.mailstatus.error {
+    background: #fda9a9;
+}
+
+.mailstatus.success {
+    background: #a9fdba;
+}
