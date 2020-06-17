@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Sedoo - Listmail
  * Description: Facilite l'envoie d'email aux admins des sites
- * Version: 0.0.7
+ * Version: 0.0.9
  * Author: Nicolas Gruwe  - SEDOO DATA CENTER
  * Author URI:      https://www.sedoo.fr 
  * GitHub Plugin URI: sedoo/sedoo-wppl-listmail
@@ -12,7 +12,7 @@
 
 function enqueue_listmail_style() {
     wp_register_style( 'sedoo_listmail_css', plugins_url('css/listmail.css', __FILE__) );
-    wp_register_style( 'sedoo_listmail_css_w', plugins_url('css/wysiwyg.css', __FILE__) );
+    wp_register_style( 'sedoo_listmail_css_w', '//cdn.quilljs.com/1.3.6/quill.snow.css' );
     wp_enqueue_style( 'sedoo_listmail_css' );
     wp_enqueue_style( 'sedoo_listmail_css_w' );
 }
@@ -21,7 +21,7 @@ add_action( 'admin_enqueue_scripts', 'enqueue_listmail_style' );
 function enqueue_listmail_script() {
     // le fichier js qui contient les fonctions tirgger au change des select
     $scrpt_listmail = plugins_url().'/sedoo-wppl-listmail/js/listmail.js';
-    $scrpt_listmail_w = plugins_url().'/sedoo-wppl-listmail/js/wysiwyg.js';
+    $scrpt_listmail_w = '//cdn.quilljs.com/1.3.6/quill.js';
     wp_enqueue_script('sedoo_listmail_w', $scrpt_listmail_w,  array ( 'jquery' ));  
     wp_enqueue_script('sedoo_listmail', $scrpt_listmail,  array ( 'jquery' ));                    
 }
@@ -96,7 +96,10 @@ function sedoo_send_mail_listmail() {
         <label> Sujet </label>
         <input type="text" name="sedoo_listmail_subject" class="regular-text sedoo_listmail_subject" placeholder="Sujet du mail">
         <label> Corps du mail </label>
-        <textarea name="sedoo_listmail_text" id="textarea_mess" placeholder="Message" rows="5" cols="30" class="sedoo_listmail_text"></textarea>
+        <div id="full-container" class="sedoo_listmail_mess">
+              <div class="editor"></div>
+            </div>
+      <!--  <textarea name="sedoo_listmail_text" id="textarea_mess" placeholder="Message" rows="5" cols="30" class="sedoo_listmail_text"></textarea> -->
         <input type="submit" name="submit" id="sedoo_listmail_submit" class="button button-primary" value="Envoyer">    
     </section>
     <?php 
@@ -124,7 +127,7 @@ function sedoo_listmail_sendmailto() {
     $header = "MIME-Version: 1.0\r\n";
     // Type de contenu. Ici plusieurs parties de type different "multipart/mixed"
     // Avec un fronti?re d?finie par $boundary
-    $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+    $header .= "Content-type: text/html; charset=iso-8859-1; boundary=\"$boundary\"\r\n";
     $header .= "\r\n";
 
       $result = mail($to, $subject, $message, "Reply-to: $expediteur\r\nFrom: $expediteur\r\n".$header);
