@@ -57,10 +57,7 @@
     background: #ddd5d5;
 }
 
-.sedoo_listmail_text {
-    margin: 10px 0px;
-}
-.sedoo_listmail_expediteur {
+.sedoo_listmail_subject, .sedoo_listmail_text, .sedoo_listmail_expediteur {
     margin-bottom: 10px;
 }
 
@@ -74,4 +71,8 @@
 
 .mailstatus.success {
     background: #a9fdba;
+}
+
+.sun-editor {
+    margin-bottom: 10px;
 }
