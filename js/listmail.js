@@ -1,9 +1,9 @@
 jQuery(document).ready(function(){   
-
+    var suneditor = SUNEDITOR.create('textarea_mess');
     function cochage_utilisateur(uid, maill, name) {
         jQuery('#sedoo_listmail_destlist').append('<p class="sedoo_listmail_dest_elem" mail="'+maill+'" id="'+uid+'">'+name+'</p>'); 
         jQuery(".sedoo_listmail_name.uid-"+uid).addClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences
-        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sedoo_listmail_text').val().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0){
+        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sun-editor-editable p').text().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0){
             jQuery('#sedoo_listmail_submit').attr('disabled', false);
         }
     }
@@ -70,36 +70,40 @@ jQuery(document).ready(function(){
         var maill = jQuery(this).attr('sedoo_maill');
         var name = jQuery(this).text();
         if(jQuery(this).hasClass('active')) {          // j'enlève ou j'ajoute l'élément a la liste des destinataires en fonction de l'état du bouton
-            jQuery('#'+uid+'.sedoo_listmail_dest_elem').remove();
+            decochage_utilisateur(uid);
         } else {
-            jQuery('#sedoo_listmail_destlist').append('<p class="sedoo_listmail_dest_elem" mail="'+maill+'" id="'+uid+'">'+name+'</p>');
+            cochage_utilisateur(uid, maill, name);   
         }
-        jQuery(".sedoo_listmail_name.uid-"+uid).toggleClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences
     });
 
 
     jQuery('#sedoo_listmail_submit').attr('disabled', true);
-    jQuery('.sedoo_listmail_subject, .sedoo_listmail_text, .sedoo_listmail_expediteur').keyup(function(){
-        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sedoo_listmail_text').val().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0 && jQuery('.sedoo_listmail_dest_elem').length != 0){
+    function check_et_activer_bouton() {
+        if(jQuery('.sedoo_listmail_subject').val().length !=0 && jQuery('.sun-editor-editable p').text().length !=0 && jQuery('.sedoo_listmail_expediteur').val().length !=0 && jQuery('.sedoo_listmail_dest_elem').length != 0){
             jQuery('#sedoo_listmail_submit').attr('disabled', false);
         }
         else
         {
             jQuery('#sedoo_listmail_submit').attr('disabled', true);        
         }
-    })
+    }
+
+    jQuery('.sedoo_listmail_subject, .sedoo_listmail_expediteur').keyup(function(){
+        check_et_activer_bouton();
+    });
+    jQuery('.sun-editor-editable p').mouseover(function(){
+        check_et_activer_bouton();
+    });
 
     jQuery('#sedoo_listmail_submit').click(function() {
         var destlist = '';
         var expediteur = jQuery('.sedoo_listmail_expediteur').val();
-        var message = jQuery('.sedoo_listmail_text').val();
+        var message = suneditor.getContents();
         var sujet = jQuery('.sedoo_listmail_subject').val();
         jQuery( "#sedoo_listmail_destlist p" ).each(function( index ) {
             destlist = destlist+','+jQuery(this).attr('mail');
         });
 
-        console.log(expediteur);
-        console.log(message);
         jQuery.ajax({
             url: ajaxurl,
             type: "POST",
