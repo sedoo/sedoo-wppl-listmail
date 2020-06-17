@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){   
-    var suneditor = SUNEDITOR.create('textarea_mess');
+    var suneditor = jQuery('#textarea_mess').trumbowyg();
     function cochage_utilisateur(uid, maill, name) {
         jQuery('#sedoo_listmail_destlist').append('<p class="sedoo_listmail_dest_elem" mail="'+maill+'" id="'+uid+'">'+name+'</p>'); 
         jQuery(".sedoo_listmail_name.uid-"+uid).addClass('active'); // si l'user est dans plusieurs site, je coche / décoche toutes ses occurrences
