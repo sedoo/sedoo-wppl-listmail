@@ -39,7 +39,7 @@
     transform: rotate(180deg);
 }
 
-.sedoo_listmailform *{
+.sedoo_listmailform>*{
     display: block;
 }
 
@@ -73,6 +73,12 @@
     background: #a9fdba;
 }
 
-.sun-editor {
+.sedoo_listmail_mess {
     margin-bottom: 10px;
+}
+
+.editor.ql-container {
+    background-color: white;
+    padding: 20px;
+    min-height: 150px;
 }
