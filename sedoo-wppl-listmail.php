@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Sedoo - Listmail
  * Description: Facilite l'envoie d'email aux admins des sites
- * Version: 0.0.9
- * Author: Nicolas Gruwe  - SEDOO DATA CENTER
+ * Version: 0.1.0
+ * Author: Nicolas Gruwe, Pierre Vert  - SEDOO DATA CENTER
  * Author URI:      https://www.sedoo.fr 
  * GitHub Plugin URI: sedoo/sedoo-wppl-listmail
  * GitHub Branch:     master
@@ -127,7 +127,7 @@ function sedoo_listmail_sendmailto() {
     $header = "MIME-Version: 1.0\r\n";
     // Type de contenu. Ici plusieurs parties de type different "multipart/mixed"
     // Avec un fronti?re d?finie par $boundary
-    $header .= "Content-type: text/html; charset=iso-8859-1; boundary=\"$boundary\"\r\n";
+    $header .= "Content-type: text/html; charset=UTF-8 boundary=\"$boundary\"\r\n";
     $header .= "\r\n";
 
       $result = mail($to, $subject, $message, "Reply-to: $expediteur\r\nFrom: $expediteur\r\n".$header);
